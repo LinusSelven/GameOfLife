@@ -15,14 +15,14 @@ public class GridTest {
     @BeforeEach
     void setup() {
         int[][] tempGrid = new int[][]{
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
@@ -39,7 +39,7 @@ public class GridTest {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
@@ -52,6 +52,33 @@ public class GridTest {
     void gridShouldOnlyContainTwoDifferentNumbers(){
         IntStream stream = Arrays.stream(grid.grid).flatMapToInt(Arrays::stream);
         assertEquals(2, stream.distinct().count());
+    }
+
+    @Test
+    void gridOnlyContainsZerosAndOnes() {
+        IntStream stream = Arrays.stream(grid.grid).flatMapToInt(x -> Arrays.stream(x));
+        var countOfNumbersNotEqualToOneOrTwo = stream.filter(n -> n <= -1 || n >= 2).count();
+
+        assertThat(countOfNumbersNotEqualToOneOrTwo).isEqualTo(0);
+    }
+
+    @Test
+    void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue(){
+        int[][] testGrid = new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        Grid futureGrid = new Grid(testGrid);
+
+        assertThat(grid.compareGrids(futureGrid)).isTrue();
     }
 }
 
