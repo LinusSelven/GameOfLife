@@ -14,11 +14,11 @@ public class GridTest {
 
     @BeforeEach
     void setup() {
-        int[][] tempGrid = new int[][]{
+        int[][] tempArray = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -26,12 +26,12 @@ public class GridTest {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        grid = new Grid(tempGrid);
+        grid = new Grid(tempArray);
     }
 
     @Test
     void checkThatGridCreatedHasTheSameValuesAsTheOneWeSentIn() {
-        int[][] tempGrid = new int[][]{
+        int[][] tempArray = new int[][]{
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -43,9 +43,9 @@ public class GridTest {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        grid = new Grid(tempGrid);
+        grid = new Grid(tempArray);
 
-        assertThat(Arrays.deepEquals(grid.grid, tempGrid)).isTrue();
+        assertThat(Arrays.deepEquals(grid.grid, tempArray)).isTrue();
     }
 
     @Test
@@ -64,11 +64,11 @@ public class GridTest {
 
     @Test
     void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue(){
-        int[][] testGrid = new int[][]{
+        int[][] tempArray = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -76,9 +76,29 @@ public class GridTest {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        Grid futureGrid = new Grid(testGrid);
+        Grid futureGrid = new Grid(tempArray);
 
         assertThat(grid.compareGrids(futureGrid)).isTrue();
+    }
+
+    @Test
+    void checkIfAllCellsAreDeadAndReturnTrue() {
+        int[][] tempArray = new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+        Grid gameOverGrid = new Grid(tempArray);
+
+        var sum = Arrays.stream(gameOverGrid.grid).flatMapToInt(Arrays::stream).sum();
+        assertThat(sum).isEqualTo(0);
     }
 }
 

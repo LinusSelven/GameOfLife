@@ -11,6 +11,5 @@ public class Grid {
 
     public boolean compareGrids(Grid futureGrid) {
         return Arrays.deepEquals(grid, futureGrid.grid);
-
     }
 }
