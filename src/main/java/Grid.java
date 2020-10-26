@@ -8,6 +8,10 @@ public class Grid {
         this.grid = grid;
     }
 
+    public Grid(int size) {
+        this.grid = new int[size][size];
+    }
+
 
     public boolean compareGrids(Grid futureGrid) {
         return Arrays.deepEquals(grid, futureGrid.grid);
