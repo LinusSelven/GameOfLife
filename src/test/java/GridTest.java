@@ -49,7 +49,7 @@ public class GridTest {
     }
 
     @Test
-    void checkGridForTwoDifferentCharacters(){
+    void gridShouldOnlyContainTwoDifferentNumbers(){
         IntStream stream = Arrays.stream(grid.grid).flatMapToInt(Arrays::stream);
         assertEquals(2, stream.distinct().count());
     }
