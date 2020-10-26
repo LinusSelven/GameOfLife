@@ -13,40 +13,41 @@ public class GameOfLifeTest {
     @BeforeEach
     void setup() {
         int[][] tempArray = new int[][]{
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
+                {0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         grid = new Grid(tempArray);
+        gol = new GameOfLife();
     }
 
 
     @Test
     void runNextGenerationAndGetExpectedGridBack() {
-        Grid futureGrid = gol.nextGen(grid);
-
-        var ourFutureArray =  new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+        var expectedFutureArray =  new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        Grid ourFutureGrid = new Grid(ourFutureArray);
+        Grid expectedFutureGrid = new Grid(expectedFutureArray);
 
-        assertThat(futureGrid.grid).isDeepEqualTo(ourFutureGrid.grid);
+        Grid actualFutureGrid = gol.nextGen(grid);
+
+        assertThat(actualFutureGrid.grid).isDeepEqualTo(expectedFutureGrid.grid);
     }
 
 
