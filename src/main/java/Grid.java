@@ -1,19 +1,19 @@
 import java.util.Arrays;
 
-public class Grid {
+class Grid {
 
-    public final int[][] grid;
+    final int[][] grid;
 
-    public Grid(int[][] grid) {
+    Grid(int[][] grid) {
         this.grid = grid;
     }
 
-    public Grid(int size) {
+    Grid(int size) {
         this.grid = new int[size][size];
     }
 
 
-    public boolean compareGrids(Grid futureGrid) {
-        return Arrays.deepEquals(grid, futureGrid.grid);
+    boolean compareGrids(Grid gridToCompareTo) {
+        return Arrays.deepEquals(grid, gridToCompareTo.grid);
     }
 }

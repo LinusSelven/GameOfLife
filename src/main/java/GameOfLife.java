@@ -1,7 +1,6 @@
-public class GameOfLife {
+class GameOfLife {
 
-
-    public Grid nextGen(Grid grid) {
+    Grid nextGen(Grid grid) {
         Grid futureGrid = new Grid(grid.grid.length);
         for (int row = 1; row < grid.grid.length - 1; row++)
             for (int column = 1; column < grid.grid.length - 1; column++) {
@@ -26,30 +25,18 @@ public class GameOfLife {
         final byte DEAD = 0;
         boolean isCellAlive = (currentCell == 1);
         boolean cellLivesNextGen = isCellAliveNextGen(isCellAlive, aliveNeighbours);
-        if (cellLivesNextGen)
-            futureGrid.grid[row][column] = ALIVE;
-        else
-            futureGrid.grid[row][column] = DEAD;
+        futureGrid.grid[row][column] = cellLivesNextGen ? ALIVE : DEAD;
     }
 
-
-    public boolean isCellAliveNextGen(boolean isAlive, int aliveNeighbors) {
-        if (isAlive == true)
-            return willLivingCellSurvive(aliveNeighbors);
-        return isCellBorn(aliveNeighbors);
+    private boolean isCellAliveNextGen(boolean isAlive, int aliveNeighbors) {
+        return isAlive ? willLivingCellSurvive(aliveNeighbors) : isCellBorn(aliveNeighbors);
     }
 
     private boolean willLivingCellSurvive(int aliveNeighbors) {
-        if (aliveNeighbors == 2 || aliveNeighbors == 3)
-            return true;
-        return false;
+        return aliveNeighbors == 2 || aliveNeighbors == 3;
     }
 
     private boolean isCellBorn(int aliveNeighbors) {
-        if (aliveNeighbors == 3)
-            return true;
-        return false;
+        return aliveNeighbors == 3;
     }
-
-
 }
