@@ -49,7 +49,7 @@ public class GridTest {
     }
 
     @Test
-    void gridShouldOnlyContainTwoDifferentNumbers() {
+    void gridShouldOnlyContainTwoDifferentNumbers(){
         IntStream stream = Arrays.stream(grid.grid).flatMapToInt(Arrays::stream);
         assertEquals(2, stream.distinct().count());
     }
@@ -63,7 +63,7 @@ public class GridTest {
     }
 
     @Test
-    void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue() {
+    void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue(){
         int[][] tempArray = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -99,6 +99,27 @@ public class GridTest {
 
         var sum = Arrays.stream(gameOverGrid.grid).flatMapToInt(Arrays::stream).sum();
         assertThat(sum).isEqualTo(0);
+    }
+
+    @Test
+    void checkThatTwoIncomingGridsAreDifferentAndReturnFalse() {
+        int[][] firstArray = new int[][]{
+                {0, 0, 0, 0, 0},
+                {0, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+        };
+        int[][] secondArray = new int[][]{
+                {0, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0},
+        };
+        Grid grid = new Grid(firstArray);
+        Grid secondGrid = new Grid(secondArray);
+        assertThat(grid.compareGrids(secondGrid)).isFalse();
     }
 }
 
