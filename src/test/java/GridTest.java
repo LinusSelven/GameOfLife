@@ -49,7 +49,7 @@ public class GridTest {
     }
 
     @Test
-    void gridShouldOnlyContainTwoDifferentNumbers(){
+    void gridShouldOnlyContainTwoDifferentNumbers() {
         IntStream stream = Arrays.stream(grid.grid).flatMapToInt(Arrays::stream);
         assertEquals(2, stream.distinct().count());
     }
@@ -63,7 +63,7 @@ public class GridTest {
     }
 
     @Test
-    void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue(){
+    void checkIfIncomingGridIsTheSameAsCurrentAndReturnTrue() {
         int[][] tempArray = new int[][]{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
