@@ -2,38 +2,38 @@ public class GameOfLife {
 
 
     public Grid nextGen(Grid grid) {
-
         Grid futureGrid = new Grid(grid.grid.length);
-
-        // Loop through every cell
-        for (int l = 1; l < grid.grid.length - 1; l++) {
-            for (int m = 1; m < grid.grid.length - 1; m++) {
-                // finding no Of Neighbours that are alive
-                int aliveNeighbours = 0;
-                for (int i = -1; i <= 1; i++)
-                    for (int j = -1; j <= 1; j++)
-                        aliveNeighbours += grid.grid[l + i][m + j];
-
-                // The cell needs to be subtracted from
-                // its neighbours as it was counted before
-                aliveNeighbours -= grid.grid[l][m];
-
-                // Implementing the Rules of Life
-                final int ALIVE = 1;
-                final int DEAD = 0;
-                boolean isAlive = (grid.grid[l][m] == 1);
-                boolean cellLivesNextGen = shouldFutureCellBeAlive(isAlive, aliveNeighbours);
-                if (cellLivesNextGen)
-                    futureGrid.grid[l][m] = ALIVE;
-                else
-                    futureGrid.grid[l][m] = DEAD;
+        for (int row = 1; row < grid.grid.length - 1; row++)
+            for (int column = 1; column < grid.grid.length - 1; column++) {
+                int aliveNeighbours = getAliveNeighbours(grid, row, column);
+                var currentCell = grid.grid[row][column];
+                aliveNeighbours -= currentCell;
+                setFutureCell(futureGrid, currentCell, row, column, aliveNeighbours);
             }
-        }
         return futureGrid;
     }
 
+    private int getAliveNeighbours(Grid grid, int row, int column) {
+        int aliveNeighbours = 0;
+        for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
+                aliveNeighbours += grid.grid[row + i][column + j];
+        return aliveNeighbours;
+    }
 
-    public boolean shouldFutureCellBeAlive(boolean isAlive, int aliveNeighbors) {
+    private void setFutureCell(Grid futureGrid, int currentCell, int row, int column, int aliveNeighbours) {
+        final byte ALIVE = 1;
+        final byte DEAD = 0;
+        boolean isCellAlive = (currentCell == 1);
+        boolean cellLivesNextGen = isCellAliveNextGen(isCellAlive, aliveNeighbours);
+        if (cellLivesNextGen)
+            futureGrid.grid[row][column] = ALIVE;
+        else
+            futureGrid.grid[row][column] = DEAD;
+    }
+
+
+    public boolean isCellAliveNextGen(boolean isAlive, int aliveNeighbors) {
         if (isAlive == true)
             return willLivingCellSurvive(aliveNeighbors);
         return isCellBorn(aliveNeighbors);
@@ -50,5 +50,6 @@ public class GameOfLife {
             return true;
         return false;
     }
+
 
 }
