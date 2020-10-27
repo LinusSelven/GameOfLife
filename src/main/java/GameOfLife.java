@@ -1,13 +1,12 @@
 public class GameOfLife {
 
 
-
     public Grid nextGen(Grid grid) {
 
         Grid futureGrid = new Grid(grid.grid.length);
 
         // Loop through every cell
-        for (int l = 1; l < grid.grid.length -1; l++) {
+        for (int l = 1; l < grid.grid.length - 1; l++) {
             for (int m = 1; m < grid.grid.length - 1; m++) {
                 // finding no Of Neighbours that are alive
                 int aliveNeighbours = 0;
@@ -20,24 +19,36 @@ public class GameOfLife {
                 aliveNeighbours -= grid.grid[l][m];
 
                 // Implementing the Rules of Life
-
-                // Cell is lonely and dies
-                if ((grid.grid[l][m] == 1) && (aliveNeighbours < 2))
-                    futureGrid.grid[l][m] = 0;
-
-                    // Cell dies due to over population
-                else if ((grid.grid[l][m] == 1) && (aliveNeighbours > 3))
-                    futureGrid.grid[l][m] = 0;
-
-                    // A new cell is born
-                else if ((grid.grid[l][m] == 0) && (aliveNeighbours == 3))
-                    futureGrid.grid[l][m] = 1;
-
-                    // Remains the same
+                final int ALIVE = 1;
+                final int DEAD = 0;
+                boolean isAlive = (grid.grid[l][m] == 1);
+                boolean cellLivesNextGen = shouldFutureCellBeAlive(isAlive, aliveNeighbours);
+                if (cellLivesNextGen)
+                    futureGrid.grid[l][m] = ALIVE;
                 else
-                    futureGrid.grid[l][m] = grid.grid[l][m];
+                    futureGrid.grid[l][m] = DEAD;
             }
         }
         return futureGrid;
     }
+
+
+    public boolean shouldFutureCellBeAlive(boolean isAlive, int aliveNeighbors) {
+        if (isAlive == true)
+            return willLivingCellSurvive(aliveNeighbors);
+        return isCellBorn(aliveNeighbors);
+    }
+
+    private boolean willLivingCellSurvive(int aliveNeighbors) {
+        if (aliveNeighbors == 2 || aliveNeighbors == 3)
+            return true;
+        return false;
+    }
+
+    private boolean isCellBorn(int aliveNeighbors) {
+        if (aliveNeighbors == 3)
+            return true;
+        return false;
+    }
+
 }
