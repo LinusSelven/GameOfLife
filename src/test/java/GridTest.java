@@ -10,23 +10,11 @@ import static org.assertj.core.api.Assertions.*;
 
 public class GridTest {
 
-    Grid grid;
+    Grid expectedGrid;
 
     @BeforeEach
     void setup() {
-        int[][] tempArray = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
-        grid = new Grid(tempArray);
+        expectedGrid = new Grid();
     }
 
     @Test
@@ -43,20 +31,21 @@ public class GridTest {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
-        grid = new Grid(tempArray);
+        expectedGrid = new Grid(tempArray);
 
-        assertThat(Arrays.deepEquals(grid.grid, tempArray)).isTrue();
+        assertThat(Arrays.deepEquals(expectedGrid.grid, tempArray)).isTrue();
     }
+
 
     @Test
     void gridShouldOnlyContainTwoDifferentNumbers(){
-        IntStream stream = Arrays.stream(grid.grid).flatMapToInt(Arrays::stream);
+        IntStream stream = Arrays.stream(expectedGrid.grid).flatMapToInt(Arrays::stream);
         assertEquals(2, stream.distinct().count());
     }
 
     @Test
     void gridOnlyContainsZerosAndOnes() {
-        IntStream stream = Arrays.stream(grid.grid).flatMapToInt(x -> Arrays.stream(x));
+        IntStream stream = Arrays.stream(expectedGrid.grid).flatMapToInt(x -> Arrays.stream(x));
         var countOfNumbersNotEqualToOneOrTwo = stream.filter(n -> n <= -1 || n >= 2).count();
 
         assertThat(countOfNumbersNotEqualToOneOrTwo).isEqualTo(0);
@@ -78,7 +67,7 @@ public class GridTest {
         };
         Grid futureGrid = new Grid(tempArray);
 
-        assertThat(grid.compareGrids(futureGrid)).isTrue();
+        assertThat(expectedGrid.compareGrids(futureGrid)).isTrue();
     }
 
     @Test
