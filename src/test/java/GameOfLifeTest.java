@@ -52,6 +52,23 @@ public class GameOfLifeTest {
         assertThat(actualFutureGrid.grid).isDeepEqualTo(expectedFutureGrid.grid);
     }
 
+    @Test
+    void killLivingCellInCornerAndReturnCellAsDead() {
+        int[][] cornerGrid = new int[][]{
+                {1, 0, 0, 0, 1},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {1, 0, 0, 0, 1},
+        };
+        Grid cornerCellGrid = new Grid(cornerGrid);
+        Grid afterOneRunGrid = gol.nextGen(cornerCellGrid);
+        int allShouldBeDead = Arrays.stream(afterOneRunGrid.grid)
+                .flatMapToInt(Arrays::stream)
+                .sum();
+        assertEquals(0, allShouldBeDead);
+    }
+
 
 
 }
